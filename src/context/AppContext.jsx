@@ -17,14 +17,14 @@ const initialExpenses = [
         date: dayjs().format('YYYY-MM-01'),
         details: 'Rice 25kg, Soya Oil 5L',
         cost: 3500,
-        addedBy: ['Shuvo Das'],
+        paidBy: { '1': 3500 }, // Shuvo Das paid all
     },
     {
         id: '2',
         date: dayjs().format('YYYY-MM-02'),
         details: 'Chicken 4kg, Eggs 2 Dozen',
         cost: 1200,
-        addedBy: ['Rahim Ahmed', 'Asif Karim'],
+        paidBy: { '2': 600, '3': 600 }, // Rahim and Asif split
     },
 ];
 
@@ -62,7 +62,7 @@ export const AppProvider = ({ children }) => {
 
     const logout = () => {
         setIsAuthenticated(false);
-        localStorage.removeItem('bb_auth');
+        localStorage.setItem('bb_auth', 'false');
     };
 
     const addExpense = (newExpense) => {

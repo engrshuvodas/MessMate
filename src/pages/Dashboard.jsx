@@ -23,48 +23,43 @@ const Dashboard = () => {
 
             const searchLower = searchText.toLowerCase();
             const matchesSearch = item.details.toLowerCase().includes(searchLower) ||
-                item.addedBy.some(m => m.toLowerCase().includes(searchLower));
+                Object.values(item.paidBy || {}).some(() => true); // Placeholder for complex search if needed
 
             return isInRange && matchesSearch;
         });
     }, [expenses, dateRange, searchText]);
 
     const totalExpense = useMemo(() => {
-        return filteredExpenses.reduce((sum, item) => sum + item.cost, 0);
+        return filteredExpenses.reduce((sum, item) => sum + (item.cost || 0), 0);
     }, [filteredExpenses]);
 
     const perPersonShare = useMemo(() => {
         return members.length > 0 ? (totalExpense / members.length) : 0;
     }, [totalExpense, members.length]);
 
-    // Settlement Calculations
+    // Settlement Calculations based on NEW paidBy format
     const settlementData = useMemo(() => {
-        const data = members.map(member => {
-            // Calculate how much this specific member has paid
-            const paidByMember = filteredExpenses.reduce((sum, item) => {
-                if (item.addedBy.includes(member.name)) {
-                    // If 2 people paid, each is credited with cost/2
-                    return sum + (item.cost / item.addedBy.length);
-                }
-                return sum;
+        return members.map(member => {
+            // Calculate total paid by this member across all filtered expenses
+            const totalPaidByThisMember = filteredExpenses.reduce((sum, item) => {
+                const contribution = (item.paidBy || {})[member.id] || 0;
+                return sum + contribution;
             }, 0);
 
-            const balance = paidByMember - perPersonShare;
+            const balance = totalPaidByThisMember - perPersonShare;
             return {
                 id: member.id,
                 name: member.name,
-                paid: paidByMember,
+                paid: totalPaidByThisMember,
                 shouldPay: perPersonShare,
                 balance: balance
             };
         });
-        return data;
     }, [members, filteredExpenses, perPersonShare]);
 
     const toReceive = settlementData.filter(m => m.balance > 0.01).sort((a, b) => b.balance - a.balance);
     const toPay = settlementData.filter(m => m.balance < -0.01).sort((a, b) => a.balance - b.balance);
 
-    // Simple Greedy Settlement Matching
     const suggestions = useMemo(() => {
         const payers = toPay.map(p => ({ ...p, balance: Math.abs(p.balance) }));
         const receivers = toReceive.map(r => ({ ...r, balance: r.balance }));
@@ -111,24 +106,38 @@ const Dashboard = () => {
             sorter: (a, b) => a.cost - b.cost,
         },
         {
-            title: 'Payers',
-            dataIndex: 'addedBy',
-            key: 'addedBy',
-            render: (tags) => (
+            title: 'Paid By',
+            key: 'paidBy',
+            render: (_, record) => (
                 <Space size={[0, 4]} wrap>
-                    {tags.map(tag => <Tag key={tag} color="blue">{tag}</Tag>)}
+                    {Object.entries(record.paidBy || {}).map(([memberId, amount]) => {
+                        const member = members.find(m => m.id === memberId);
+                        return (
+                            <Tag key={memberId} color="blue">
+                                {member ? member.name : 'Unknown'}: ৳{amount.toLocaleString()}
+                            </Tag>
+                        );
+                    })}
                 </Space>
             ),
         },
     ];
 
     const exportToExcel = () => {
-        const dataToExport = filteredExpenses.map(item => ({
-            Date: dayjs(item.date).format('YYYY-MM-DD'),
-            'Bajar Details': item.details,
-            'Total Cost (৳)': item.cost,
-            'Payers': item.addedBy.join(', ')
-        }));
+        const dataToExport = filteredExpenses.map(item => {
+            const payersString = Object.entries(item.paidBy || {})
+                .map(([id, amt]) => {
+                    const m = members.find(member => member.id === id);
+                    return `${m ? m.name : id}: ${amt}`;
+                }).join(', ');
+
+            return {
+                Date: dayjs(item.date).format('YYYY-MM-DD'),
+                'Bajar Details': item.details,
+                'Total Cost (৳)': item.cost,
+                'Contributions': payersString
+            };
+        });
 
         dataToExport.push({});
         dataToExport.push({ Date: 'SUMMARY', 'Bajar Details': 'Total Expense', 'Total Cost (৳)': totalExpense });
@@ -145,7 +154,7 @@ const Dashboard = () => {
         <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={12}>
-                    <Card bordered={false} className="summary-card" gradient="linear-gradient(135deg, #e6f7ff 0%, #ffffff 100%)">
+                    <Card bordered={false} className="summary-card">
                         <Statistic
                             title="Total Mess Expense"
                             value={totalExpense}
@@ -201,8 +210,8 @@ const Dashboard = () => {
 
                 <Col xs={24} lg={8}>
                     <Card title={<><TransactionOutlined /> Settlement Summary</>} className="fade-in-content shadow-sm">
-                        <Divider orientation="left" plain><Badge status="success" text="To Receive" /></Divider>
                         <List
+                            header={<Badge status="success" text="To Receive (Paid > Share)" />}
                             size="small"
                             dataSource={toReceive}
                             renderItem={item => (
@@ -212,8 +221,10 @@ const Dashboard = () => {
                             )}
                         />
 
-                        <Divider orientation="left" plain><Badge status="error" text="To Pay" /></Divider>
+                        <Divider style={{ margin: '12px 0' }} />
+
                         <List
+                            header={<Badge status="error" text="To Pay (Paid < Share)" />}
                             size="small"
                             dataSource={toPay}
                             renderItem={item => (
@@ -225,11 +236,11 @@ const Dashboard = () => {
 
                         {suggestions.length > 0 && (
                             <>
-                                <Divider orientation="left" plain><Text type="secondary">Suggestions</Text></Divider>
+                                <Divider orientation="left" plain><Text type="secondary">Settlement Plan</Text></Divider>
                                 <div style={{ background: '#fafafa', padding: '12px', borderRadius: '8px' }}>
                                     {suggestions.map((s, idx) => (
                                         <div key={idx} style={{ marginBottom: '4px', fontSize: '13px' }}>
-                                            <Tag color="orange" style={{ marginRight: '4px' }}>Split</Tag>
+                                            <Tag color="orange" style={{ marginRight: '4px' }}>Pay</Tag>
                                             {s}
                                         </div>
                                     ))}
