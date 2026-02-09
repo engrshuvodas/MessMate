@@ -16,13 +16,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/engrshuvodas/MessMate/issues"
   },
   "homepage": "https://github.com/engrshuvodas/MessMate#readme",
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@ant-design/plots": "^2.6.8",
     "antd": "^6.2.3",
     "axios": "^1.13.5",
     "dayjs": "^1.11.19",

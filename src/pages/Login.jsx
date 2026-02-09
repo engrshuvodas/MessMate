@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Form, Input, Button, Card, Typography, message, Layout } from 'antd';
-import { UserOutlined, LockOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, message, Layout, Space } from 'antd';
+import { UserOutlined, LockOutlined, ShoppingCartOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,71 +14,95 @@ const Login = () => {
     const onFinish = (values) => {
         const success = login(values.username, values.password);
         if (success) {
-            message.success('Login successful! Welcome back, Admin.');
+            message.success('Welcome back, Manager!');
             navigate('/');
         } else {
-            message.error('Invalid username or password!');
+            message.error('Oops! Invalid credentials.');
         }
     };
 
     return (
-        <Layout style={{ minHeight: '100vh', background: '#f0f2f5' }}>
-            <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Card
-                    style={{ width: 400, borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
-                    className="fade-in-content"
-                >
-                    <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                        <div style={{
-                            width: '64px',
-                            height: '64px',
-                            background: 'linear-gradient(135deg, #1890ff 0%, #001529 100%)',
-                            borderRadius: '16px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 auto 16px',
-                            boxShadow: '0 4px 12px rgba(24, 144, 255, 0.3)'
-                        }}>
-                            <ShoppingCartOutlined style={{ fontSize: '32px', color: 'white' }} />
-                        </div>
-                        <Title level={2} style={{ margin: 0 }}>BajarBros</Title>
-                        <Text type="secondary">Admin Login</Text>
-                    </div>
-
-                    <Form
-                        name="login_form"
-                        layout="vertical"
-                        onFinish={onFinish}
-                        size="large"
+        <Layout style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)' }}>
+            <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+                <div style={{ width: '100%', maxWidth: 420 }}>
+                    <Card
+                        className="premium-card fade-in-up"
+                        style={{ padding: '20px 10px' }}
                     >
-                        <Form.Item
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                            <div style={{
+                                width: '72px',
+                                height: '72px',
+                                background: 'var(--primary-gradient)',
+                                borderRadius: '20px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                margin: '0 auto 20px',
+                                boxShadow: '0 10px 25px rgba(255, 95, 109, 0.3)',
+                                transform: 'rotate(-5deg)'
+                            }}>
+                                <ShoppingCartOutlined style={{ fontSize: '36px', color: 'white' }} />
+                            </div>
+                            <Title level={1} style={{ margin: 0, letterSpacing: '-1px', color: '#1a1a1a' }}>PaiseGone</Title>
+                            <Text type="secondary" style={{ fontSize: 16 }}>Mess Expense Manager</Text>
+                        </div>
+
+                        <Form
+                            name="login_form"
+                            layout="vertical"
+                            onFinish={onFinish}
+                            size="large"
                         >
-                            <Input prefix={<UserOutlined />} placeholder="Username" />
-                        </Form.Item>
+                            <Form.Item
+                                name="username"
+                                rules={[{ required: true, message: 'Your username please' }]}
+                            >
+                                <Input
+                                    prefix={<UserOutlined style={{ color: '#bfbfbf' }} />}
+                                    placeholder="Username"
+                                    style={{ borderRadius: 12, height: 50 }}
+                                    variant="filled"
+                                />
+                            </Form.Item>
 
-                        <Form.Item
-                            name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
-                        >
-                            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-                        </Form.Item>
+                            <Form.Item
+                                name="password"
+                                rules={[{ required: true, message: 'Password is required' }]}
+                            >
+                                <Input.Password
+                                    prefix={<LockOutlined style={{ color: '#bfbfbf' }} />}
+                                    placeholder="Password"
+                                    style={{ borderRadius: 12, height: 50 }}
+                                    variant="filled"
+                                />
+                            </Form.Item>
 
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit" block style={{ height: '48px', borderRadius: '8px' }}>
-                                Login
-                            </Button>
-                        </Form.Item>
-                    </Form>
+                            <Form.Item style={{ marginTop: 32 }}>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    block
+                                    style={{ height: 54, borderRadius: 14, fontSize: 16 }}
+                                >
+                                    <Space>Login to Dashboard <ArrowRightOutlined /></Space>
+                                </Button>
+                            </Form.Item>
+                        </Form>
 
-                    <div style={{ textAlign: 'center' }}>
-                        <Text type="secondary" style={{ fontSize: '12px' }}>
-                            Only the Mess Manager can access this system.
+                        <div style={{ textAlign: 'center', marginTop: 24 }}>
+                            <Text type="secondary" style={{ fontSize: '13px' }}>
+                                For demonstration use: <Text strong>admin / admin</Text>
+                            </Text>
+                        </div>
+                    </Card>
+
+                    <div style={{ textAlign: 'center', marginTop: 24 }}>
+                        <Text type="secondary" style={{ fontSize: 12 }}>
+                            ©{new Date().getFullYear()} PaiseGone • Developed by Engr Shuvo
                         </Text>
                     </div>
-                </Card>
+                </div>
             </Content>
         </Layout>
     );

@@ -1,44 +1,81 @@
-# BajarBros - Mess Expense Tracker 🍛
+# <img src="https://img.icons8.com/plasticine/100/shopping-basket-2.png" width="40" /> PaiseGone - Mess Expense Tracker 💸
 
-Welcome to **BajarBros**, the ultimate utility for mess-mates to track and settle daily বাজার (grocery) expenses fairly and efficiently.
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![Ant-Design](https://img.shields.io/badge/-Ant_Design-%230170FE?style=for-the-badge&logo=ant-design&logoColor=white)](https://ant.design/)
 
-## 🚀 Getting Started
-
-### Option A: One-Click Run (Recommended for Windows)
-Just double-click the **`Run_BajarBros.bat`** file in the root folder. 
-It will automatically install dependencies (first time only) and start the server for you.
-
-### Option B: Manual Terminal
-1.  **Installation**: Run `npm install` in the project root.
-2.  **Start App**: Run `npm start`.
-3.  **Access**: Open `http://localhost:5173` in your browser.
-
-## ✨ Key Features
-
-### 1. The Smarter Dashboard
-- **Live Summary**: See the total mess spend and exactly how much each person needs to contribute for an equal split.
-- **Settlement Engine**: The app automatically identifies who is "in debt" and who is "owed money" based on their contributions.
-- **Smart Suggestions**: It generates a list of exactly who should give how much to whom (e.g., *"Rahim should give ৳450 to Shuvo"*).
-- **Date Filtering**: View records for specific months or custom date ranges.
-
-### 2. Multi-Payer Bajar Entry
-- Use the **Add Bajar** page to log shopping.
-- Supports **Multiple Payers**: If 2 or 3 brothers split the cost of a shopping trip at the store, you can select all of them. The app will divide the credit among them equally.
-- Detailed item lists and data validation.
-
-### 3. Member Management
-- Add new "brothers" to the mess or update names easily.
-- Calculations update instantly when members are added or removed.
-
-### 4. Excel Reports
-- Download high-quality `.xlsx` reports from the dashboard.
-- Includes total summaries and share-per-person data at the bottom.
-
-## 💻 Technical Stack
-- **UI**: Ant Design (Premium Green/Blue Theme)
-- **Engine**: React Context API + Hooks
-- **Logic**: Greedy Settlement Algorithm
-- **Persistence**: LocalStorage (your data stays in your browser!)
+Welcome to **PaiseGone**, a premium and advanced utility designed for students and professionals sharing a mess. It simplifies the complex task of tracking daily বাজার (grocery) expenses and ensures a fair settlement between all members.
 
 ---
-*Created for bachelors, by BajarBros.*
+
+## 🌟 Modern UI & Powerful Features
+
+### 📊 Multi-Functional Dashboard
+Get a high-level overview of your mess financial health. The dashboard calculates the **total expense**, **per-person share**, and provides a **Settlement Plan** to clear debts instantly.
+
+![Dashboard Preview](Screenshot/Dashboard.png)
+
+### 🗓️ Advanced Bajar Records
+Manage your historical data like a pro. Filter records by date ranges (e.g., full month of February), search for specific items, and **Export everything to Excel** with one click.
+
+![Bajar Records](Screenshot/BajarRecords.png)
+
+### 🛒 Multi-Payer Entry System
+Log your expenses with ease. The system allows multiple members to contribute to a single bazaar trip, automatically calculating the total cost.
+
+![Add Expense](Screenshot/AddExpense.png)
+
+### 👥 Member Management
+Easily add, edit, or remove mess members. The entire system's calculations (shares and balances) update in real-time.
+
+![Manage Members](Screenshot/ManageMembers.png)
+
+### ⚙️ Personalized Settings
+Switch between **Light** and **Dark** modes, change your preferred currency (৳, ₹, $), and manage your localization settings.
+
+![Settings](Screenshot/Settings.png)
+
+---
+
+## 🚀 One-Click Installation (Windows)
+
+No need to open a terminal! We have built a dedicated runner for you:
+
+1. **Clone/Download** the repository.
+2. Double-click **`Run_PaiseGone.bat`**.
+   - *It will automatically check for Node.js, install dependencies on the first run, and launch the server.*
+3. Open `http://localhost:5173` in your browser.
+
+![Console Runner](Screenshot/bat.png)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React.js (Vite)
+- **UI Framework**: Ant Design (v6)
+- **Charts**: Ant Design Charts (G2Plot)
+- **Data Management**: LocalStorage (Persistent)
+- **Excel Export**: SheetJS (XLSX)
+- **Date Handling**: Day.js
+
+---
+
+## ✨ Features Spotlight
+
+- **🌙 Premium Dark Mode**: Eye-friendly interface designed for late-night calculations.
+- **📄 Excel Reporting**: Generate professional bazar reports for the whole month.
+- **🔄 Dynamic Settlement**: Tells exactly who owes whom, avoiding any confusion.
+- **⚡ Real-time Sync**: All calculations happen instantly as you type.
+- **🔒 Secure Local Storage**: Your data stays on your machine.
+
+---
+
+### 👨‍💻 Developed By
+
+**Engr Shuvo Das**  
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/engrshuvodas/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/engrshuvodas/)
+
+---
+*Created with ❤️ for Mess Managers everywhere.*

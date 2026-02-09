@@ -1,10 +1,10 @@
 @echo off
-TITLE BajarBros - Mess Expense Tracker
-color 0b
+TITLE PaiseGone - Mess Expense Tracker
+color 0c
 
 echo.
 echo  ==============================================================
-echo            BAJARBROS - MESS EXPENSE TRACKER
+echo            PAISEGONE - MESS EXPENSE TRACKER
 echo  ==============================================================
 echo.
 

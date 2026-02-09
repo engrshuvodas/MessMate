@@ -5,15 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import dayjs from 'dayjs';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 const { TextArea } = Input;
 
 const AddExpense = () => {
-    const { members, addExpense } = useContext(AppContext);
+    const { members, addExpense, settings } = useContext(AppContext);
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [totalEntered, setTotalEntered] = useState(0);
-    const totalCost = Form.useWatch('cost', form) || 0;
+
+    const currency = settings?.currency || '₹';
 
     // Real-time calculation of total contributions
     const contributions = Form.useWatch('contributions', form) || {};
@@ -26,16 +27,6 @@ const AddExpense = () => {
     }, [contributions, form]);
 
     const onFinish = async (values) => {
-        // Validate sum
-        if (Math.abs(totalEntered - values.cost) > 0.1) {
-            notification.error({
-                message: 'Validation Error',
-                description: `Total contributions (৳${totalEntered}) must exactly equal the Total Costing (৳${values.cost}).`,
-            });
-            return;
-        }
-
-        // Check if at least one person paid
         if (totalEntered === 0) {
             notification.error({
                 message: 'Validation Error',
@@ -45,7 +36,6 @@ const AddExpense = () => {
         }
 
         try {
-            // Clean up the contributions object (remove zeros/nulls)
             const paidBy = {};
             Object.entries(values.contributions || {}).forEach(([memberId, amount]) => {
                 if (amount && amount > 0) {
@@ -64,7 +54,7 @@ const AddExpense = () => {
 
             notification.success({
                 message: 'Expense Added',
-                description: 'Record saved successfully with individual contributions.',
+                description: 'Bajar record saved successfully.',
             });
 
             form.resetFields();
@@ -77,26 +67,25 @@ const AddExpense = () => {
         }
     };
 
-    const isMatched = Math.abs(totalEntered - totalCost) < 0.1 && totalCost > 0;
-
     return (
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+        <div className="fade-in-up" style={{ maxWidth: 1000, margin: '0 auto' }}>
             <Button
                 type="link"
                 icon={<ArrowLeftOutlined />}
                 onClick={() => navigate('/')}
-                style={{ marginBottom: 16, paddingLeft: 0 }}
+                style={{ marginBottom: 16, paddingLeft: 0, color: '#ff5f6d', fontWeight: 600 }}
             >
                 Back to Dashboard
             </Button>
 
             <Card
-                bordered={false}
-                className="shadow-sm"
+                className="premium-card"
                 title={
                     <Space>
-                        <ShoppingCartOutlined style={{ color: '#1890ff' }} />
-                        <span style={{ fontSize: '20px' }}>Add Bajar Expense</span>
+                        <div style={{ background: 'var(--primary-gradient)', padding: 8, borderRadius: 10, display: 'flex' }}>
+                            <ShoppingCartOutlined style={{ color: 'white' }} />
+                        </div>
+                        <span style={{ fontSize: '20px', fontWeight: 600 }}>New Bajar Entry</span>
                     </Space>
                 }
             >
@@ -111,108 +100,94 @@ const AddExpense = () => {
                     }}
                     size="large"
                 >
-                    <Row gutter={24}>
+                    <Row gutter={32}>
                         <Col xs={24} md={12}>
                             <Form.Item
                                 name="date"
-                                label="Date of Purchase"
+                                label={<Text strong>Purchase Date</Text>}
                                 rules={[{ required: true, message: 'Select date' }]}
                             >
-                                <DatePicker style={{ width: '100%' }} />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="cost"
-                                label="Total Costing (৳)"
-                                rules={[
-                                    { required: true, message: 'Enter total cost' },
-                                    { type: 'number', min: 1, message: 'Cost must be at least 1' }
-                                ]}
-                            >
-                                <InputNumber
-                                    style={{ width: '100%' }}
-                                    placeholder="Total amount (Auto-calculated)"
-                                    readOnly
-                                    disabled
-                                    formatter={value => `৳ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                    parser={value => value.replace(/৳\s?|(,*)/g, '')}
-                                />
+                                <DatePicker style={{ width: '100%', borderRadius: 10 }} variant="filled" />
                             </Form.Item>
 
                             <Form.Item
                                 name="details"
-                                label="Bajar Details"
+                                label={<Text strong>Bajar Details</Text>}
                                 rules={[{ required: true, message: 'Please describe the items' }]}
                             >
-                                <TextArea rows={4} placeholder="e.g. Rice, Chicken, Eggs..." />
+                                <TextArea rows={4} placeholder="e.g. Rice 25kg, Chicken 4kg, Masala..." style={{ borderRadius: 10 }} variant="filled" />
                             </Form.Item>
+
+                            <div style={{ background: '#fef2f2', padding: '20px', borderRadius: '16px', marginTop: 24 }}>
+                                <Text type="secondary" style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase' }}>Total Calculated Cost</Text>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 4 }}>
+                                    <Title level={2} style={{ margin: 0, color: '#ff5f6d' }}>{currency}{totalEntered.toLocaleString()}</Title>
+                                    <Text type="secondary">automatically updated</Text>
+                                </div>
+
+                                <Form.Item name="cost" hidden>
+                                    <InputNumber />
+                                </Form.Item>
+                            </div>
                         </Col>
 
                         <Col xs={24} md={12}>
-                            <div style={{ background: '#f9f9f9', padding: '16px', borderRadius: '12px', border: '1px solid #f0f0f0' }}>
-                                <Title level={5} style={{ marginTop: 0 }}>
-                                    <WalletOutlined /> Individual Contributions
+                            <div style={{ background: '#f9f9f9', padding: '24px', borderRadius: '20px', border: '1px solid #f0f0f0' }}>
+                                <Title level={5} style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <WalletOutlined style={{ color: '#ff5f6d' }} /> Member Contributions
                                 </Title>
-                                <Text type="secondary" style={{ fontSize: '13px', display: 'block', marginBottom: '16px' }}>
-                                    Enter how much each member actually paid. Leave blank if 0.
+                                <Text type="secondary" style={{ fontSize: '13px', display: 'block', marginBottom: '20px' }}>
+                                    Enter exactly how much each brother paid at the counter.
                                 </Text>
 
-                                <div style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '8px' }}>
+                                <div style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '12px' }}>
                                     {members.map(member => (
                                         <Form.Item
                                             key={member.id}
                                             name={['contributions', member.id]}
-                                            label={<Text strong>{member.name}</Text>}
-                                            style={{ marginBottom: '12px' }}
+                                            label={<Text strong style={{ fontSize: 13 }}>{member.name}</Text>}
+                                            style={{ marginBottom: '16px' }}
                                         >
                                             <InputNumber
-                                                style={{ width: '100%' }}
-                                                placeholder="৳ Amount"
+                                                style={{ width: '100%', borderRadius: 8 }}
+                                                placeholder={`${currency} 0.00`}
                                                 min={0}
-                                                formatter={value => `৳ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                parser={value => value.replace(/৳\s?|(,*)/g, '')}
+                                                variant="filled"
+                                                formatter={value => `${currency} ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                parser={value => value.replace(new RegExp(`\\${currency}\\s?|(,*)`, 'g'), '')}
                                             />
                                         </Form.Item>
                                     ))}
                                 </div>
 
-                                <Divider style={{ margin: '16px 0' }} />
-
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <Text strong>Total Entered:</Text>
-                                    <Title level={4} style={{ margin: 0, color: isMatched ? '#52c41a' : '#ff4d4f' }}>
-                                        ৳{totalEntered.toLocaleString()}
-                                    </Title>
-                                </div>
-
-                                {!isMatched && totalCost > 0 && (
-                                    <Alert
-                                        message={`Sum must equal ৳${totalCost}`}
-                                        type="warning"
-                                        showIcon
-                                        style={{ marginTop: '12px', padding: '8px' }}
-                                    />
-                                )}
-
-                                {isMatched && (
-                                    <Text type="success" style={{ display: 'block', marginTop: '12px', textAlign: 'center' }}>
-                                        <CheckCircleOutlined /> Amounts match perfectly!
-                                    </Text>
+                                {totalEntered > 0 && (
+                                    <div style={{ marginTop: 16 }}>
+                                        <Alert
+                                            message={<Text strong style={{ color: '#00c853' }}>Perfect! Total {currency}{totalEntered} will be recorded.</Text>}
+                                            type="success"
+                                            showIcon
+                                            icon={<CheckCircleOutlined />}
+                                            style={{ borderRadius: 10, border: 'none', background: '#f0fff4' }}
+                                        />
+                                    </div>
                                 )}
                             </div>
                         </Col>
                     </Row>
 
-                    <Form.Item style={{ marginTop: '24px', marginBottom: 0 }}>
+                    <Divider style={{ margin: '32px 0' }} />
+
+                    <Form.Item style={{ marginBottom: 0 }}>
                         <Button
                             type="primary"
                             htmlType="submit"
                             icon={<SaveOutlined />}
                             size="large"
                             block
-                            disabled={!isMatched}
+                            style={{ height: 56, borderRadius: 14, fontSize: 16 }}
+                            disabled={totalEntered <= 0}
                         >
-                            Save Bajar Record
+                            Confirm and Save Bajar
                         </Button>
                     </Form.Item>
                 </Form>
