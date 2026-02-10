@@ -119,7 +119,7 @@ const AddExpense = () => {
                                 <TextArea rows={4} placeholder="e.g. Rice 25kg, Chicken 4kg, Masala..." style={{ borderRadius: 10 }} variant="filled" />
                             </Form.Item>
 
-                            <div style={{ background: '#fef2f2', padding: '20px', borderRadius: '16px', marginTop: 24 }}>
+                            <div className="info-box" style={{ padding: '20px', borderRadius: '16px', marginTop: 24 }}>
                                 <Text type="secondary" style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase' }}>Total Calculated Cost</Text>
                                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 4 }}>
                                     <Title level={2} style={{ margin: 0, color: '#ff5f6d' }}>{currency}{totalEntered.toLocaleString()}</Title>
@@ -133,7 +133,7 @@ const AddExpense = () => {
                         </Col>
 
                         <Col xs={24} md={12}>
-                            <div style={{ background: '#f9f9f9', padding: '24px', borderRadius: '20px', border: '1px solid #f0f0f0' }}>
+                            <div className="secondary-container" style={{ padding: '24px', borderRadius: '20px' }}>
                                 <Title level={5} style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
                                     <WalletOutlined style={{ color: '#ff5f6d' }} /> Member Contributions
                                 </Title>
@@ -164,11 +164,12 @@ const AddExpense = () => {
                                 {totalEntered > 0 && (
                                     <div style={{ marginTop: 16 }}>
                                         <Alert
-                                            message={<Text strong style={{ color: '#00c853' }}>Perfect! Total {currency}{totalEntered} will be recorded.</Text>}
+                                            message={<Text strong className="success-box-text">Perfect! Total {currency}{totalEntered} will be recorded.</Text>}
                                             type="success"
                                             showIcon
-                                            icon={<CheckCircleOutlined />}
-                                            style={{ borderRadius: 10, border: 'none', background: '#f0fff4' }}
+                                            icon={<CheckCircleOutlined className="success-box-text" />}
+                                            style={{ borderRadius: 10, border: 'none' }}
+                                            className="success-box"
                                         />
                                     </div>
                                 )}

@@ -100,7 +100,7 @@ const AppLayout = () => {
     ];
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ minHeight: '100vh', background: 'var(--bg-main)' }}>
             <Sider
                 trigger={null}
                 collapsible
@@ -181,7 +181,7 @@ const AppLayout = () => {
                     <Outlet />
                 </Content>
 
-                <Footer style={{ textAlign: 'center', background: 'transparent', color: '#bfbfbf', padding: '24px 50px' }}>
+                <Footer style={{ textAlign: 'center', background: 'transparent', color: 'var(--text-secondary)', padding: '24px 50px' }}>
                     PaiseGone Expense Tracker • <b>Version 2.1</b> • ©{new Date().getFullYear()} <br />
                     Developed with ❤️ By <a href="https://github.com/engrshuvodas/" target="_blank" rel="noopener noreferrer" style={{ color: '#ff5f6d', fontWeight: 600 }}>Engr Shuvo Das</a> • <a href="/about" style={{ color: '#bfbfbf' }}>About</a>
                 </Footer>

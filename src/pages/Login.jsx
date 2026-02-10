@@ -23,7 +23,7 @@ const Login = () => {
     };
 
     return (
-        <Layout style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)' }}>
+        <Layout style={{ minHeight: '100vh', background: 'var(--bg-main)' }}>
             <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
                 <div style={{ width: '100%', maxWidth: 420 }}>
                     <Card
@@ -45,7 +45,7 @@ const Login = () => {
                             }}>
                                 <ShoppingCartOutlined style={{ fontSize: '36px', color: 'white' }} />
                             </div>
-                            <Title level={1} style={{ margin: 0, letterSpacing: '-1px', color: '#1a1a1a' }}>PaiseGone</Title>
+                            <Title level={1} style={{ margin: 0, letterSpacing: '-1px' }}>PaiseGone</Title>
                             <Text type="secondary" style={{ fontSize: 16 }}>Mess Expense Manager</Text>
                         </div>
 

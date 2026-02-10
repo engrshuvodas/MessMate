@@ -130,9 +130,9 @@ const Settings = () => {
                 </Form>
             </Card>
 
-            <Card className="premium-card" style={{ marginTop: 24, background: '#fef2f2', border: 'none' }}>
+            <Card className="premium-card info-box" style={{ marginTop: 24, border: 'none' }}>
                 <Space direction="vertical">
-                    <Text strong style={{ color: '#991b1b' }}>Advanced Info</Text>
+                    <Text strong className="info-box-title">Advanced Info</Text>
                     <Text type="secondary" style={{ fontSize: 13 }}>
                         Current System Timezone: <Text strong>{currentTz}</Text>
                     </Text>

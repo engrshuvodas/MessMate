@@ -72,7 +72,7 @@ const ManageMembers = () => {
                     <Avatar
                         src={name.toLowerCase().includes('shuvo') ? "/engr_shuvo.jpg" : undefined}
                         icon={!name.toLowerCase().includes('shuvo') ? <UserOutlined /> : undefined}
-                        style={{ backgroundColor: name.toLowerCase().includes('shuvo') ? 'transparent' : '#1890ff' }}
+                        className="secondary-avatar"
                     />
                     <div>
                         <Text strong style={{ display: 'block' }}>{name}</Text>
@@ -118,7 +118,7 @@ const ManageMembers = () => {
     return (
         <Card
             bordered={false}
-            className="shadow-sm"
+            className="premium-card"
             title={<Title level={3} style={{ margin: 0 }}><TeamOutlined /> Mess Members</Title>}
             extra={
                 <Button

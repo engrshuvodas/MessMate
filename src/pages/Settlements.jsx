@@ -104,7 +104,7 @@ const SettlementSummary = () => {
                     <Avatar
                         src={record.name.toLowerCase().includes('shuvo') ? "/engr_shuvo.jpg" : undefined}
                         icon={<UserOutlined />}
-                        style={{ backgroundColor: record.name.toLowerCase().includes('shuvo') ? 'transparent' : '#f5f5f5', color: '#8c8c8c' }}
+                        className="secondary-avatar"
                     />
                     <div>
                         <Text strong>{record.name}</Text><br />
@@ -241,18 +241,13 @@ const SettlementSummary = () => {
                 width={500}
                 centered
             >
-                <div style={{
-                    background: '#e5ddd5',
+                <div className="whatsapp-preview-bg" style={{
                     padding: '20px',
-                    borderRadius: '12px',
-                    backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
-                    backgroundSize: 'contain'
+                    borderRadius: '12px'
                 }}>
-                    <div style={{
-                        background: 'white',
+                    <div className="whatsapp-bubble" style={{
                         padding: '15px',
                         borderRadius: '8px',
-                        boxShadow: '0 1px 0.5px rgba(0,0,0,0.13)',
                         position: 'relative'
                     }}>
                         <pre style={{

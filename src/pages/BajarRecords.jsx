@@ -171,7 +171,7 @@ const BajarRecords = () => {
                     {Object.entries(record.paidBy || {}).map(([memberId, amount]) => {
                         const member = members.find(m => m.id === memberId);
                         return (
-                            <Tag key={memberId} color="default" style={{ borderRadius: 6, border: 'none', background: 'rgba(0,0,0,0.04)' }}>
+                            <Tag key={memberId} color="default" className="pill-badge" style={{ fontSize: 11, background: 'var(--bg-secondary)' }}>
                                 <Text style={{ fontSize: 11 }}>{member ? member.name : 'Unknown'}: </Text>
                                 <Text strong style={{ fontSize: 11 }}>{currency}{amount}</Text>
                             </Tag>
@@ -295,11 +295,11 @@ const BajarRecords = () => {
                         <Tag
                             closable
                             onClose={() => setDateRange(null)}
-                            color="red"
-                            style={{ borderRadius: 6, margin: 0, padding: '2px 10px', background: '#fff1f0', border: '1px solid #ffa39e' }}
+                            className="info-box"
+                            style={{ borderRadius: 6, margin: 0, padding: '2px 10px', border: '1px solid var(--border-main)' }}
                         >
-                            <CalendarOutlined style={{ marginRight: 4 }} />
-                            {dateRange[0] && dateRange[1] ? `${dateRange[0].format('DD MMM')} - ${dateRange[1].format('DD MMM')}` : 'Full Records'}
+                            <CalendarOutlined style={{ marginRight: 4 }} className="info-box-title" />
+                            <Text className="info-box-title">{dateRange[0] && dateRange[1] ? `${dateRange[0].format('DD MMM')} - ${dateRange[1].format('DD MMM')}` : 'Full Records'}</Text>
                         </Tag>
                     )}
                 </div>

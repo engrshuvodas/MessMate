@@ -100,14 +100,12 @@ const About = () => {
                     </Text>
 
                     {/* Premium Animated Progress Bar */}
-                    <div style={{
+                    <div className="progress-container" style={{
                         height: '14px',
                         width: '100%',
-                        backgroundColor: '#f0f0f0',
                         borderRadius: '10px',
                         display: 'flex',
                         overflow: 'hidden',
-                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)',
                         marginBottom: '25px'
                     }}>
                         <Tooltip title="JavaScript (JSX): 88.5%">
@@ -174,14 +172,12 @@ const About = () => {
                 <Divider orientation="left">About the Creator</Divider>
                 <Row gutter={[24, 24]} align="middle">
                     <Col xs={24} md={6} style={{ textAlign: 'center' }}>
-                        <div style={{
+                        <div className="profile-avatar-container" style={{
                             width: '120px',
                             height: '120px',
                             borderRadius: '50%',
                             overflow: 'hidden',
                             margin: '0 auto',
-                            boxShadow: '0 8px 15px rgba(255, 77, 79, 0.2)',
-                            border: '4px solid #fff'
                         }}>
                             <img
                                 src="/engr_shuvo.jpg"

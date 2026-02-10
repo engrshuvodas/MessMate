@@ -7,20 +7,48 @@
   --danger-gradient: linear-gradient(135deg, #ff3d00 0%, #ff9100 100%);
   --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+
+  /* Theme Colors */
+  --bg-main: #f9f9f9;
+  --bg-card: #ffffff;
+  --bg-secondary: #f9f9f9;
+  --bg-alert-red: #fef2f2;
+  --bg-alert-green: #f0fff4;
+  --text-main: #262626;
+  --text-heading: #1a1a1a;
+  --text-secondary: #8c8c8c;
+  --text-alert-red: #991b1b;
+  --text-alert-green: #008a3e;
+  --border-main: #f0f0f0;
+}
+
+.dark {
+  --bg-main: #141414;
+  --bg-card: #1d1d1d;
+  --bg-secondary: #262626;
+  --bg-alert-red: #2a1212;
+  --bg-alert-green: #062211;
+  --text-main: #e5e5e5;
+  --text-heading: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-alert-red: #ff9ca2;
+  --text-alert-green: #10b981;
+  --border-main: #303030;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f9f9f9;
-  color: #262626;
+  background: var(--bg-main);
+  color: var(--text-main);
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
 .dark body {
-  background: #141414;
-  color: #e5e5e5;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
 h1,
@@ -30,6 +58,7 @@ h4,
 h5,
 h6 {
   font-family: 'Poppins', sans-serif !important;
+  color: var(--text-heading);
 }
 
 #root {
@@ -60,16 +89,16 @@ h6 {
 /* Sidebar Customization */
 .main-sider,
 .ant-layout-sider {
-  background: #ffffff !important;
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--bg-card) !important;
+  border-right: 1px solid var(--border-main);
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.03);
   z-index: 1001;
 }
 
 .dark .main-sider,
 .dark .ant-layout-sider {
-  background: #1d1d1d !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card) !important;
+  border-right: 1px solid var(--border-main);
 }
 
 .ant-menu-item {
@@ -94,8 +123,8 @@ h6 {
 .premium-header,
 .ant-layout-header {
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.8) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(var(--bg-main-rgb, 255, 255, 255), 0.8) !important;
+  border-bottom: 1px solid var(--border-main);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -108,13 +137,12 @@ h6 {
 
 .dark .premium-header,
 .dark .ant-layout-header {
-  background: rgba(20, 20, 20, 0.8) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(var(--bg-main-rgb, 20, 20, 20), 0.8) !important;
 }
 
 /* 3D Cards */
 .premium-card {
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 16px !important;
   border: none !important;
   box-shadow: var(--card-shadow) !important;
@@ -122,8 +150,7 @@ h6 {
 }
 
 .dark .premium-card {
-  background: #1d1d1d;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  background: var(--bg-card);
 }
 
 .premium-card:hover {
@@ -137,15 +164,15 @@ h6 {
 }
 
 .ant-table-thead>tr>th {
-  background: #fdfdfd !important;
+  background: var(--bg-secondary) !important;
   font-weight: 600 !important;
-  color: #8c8c8c !important;
-  border-bottom: 1px solid #f0f0f0 !important;
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid var(--border-main) !important;
 }
 
 .dark .ant-table-thead>tr>th {
-  background: #262626 !important;
-  border-bottom: 1px solid #303030 !important;
+  background: var(--bg-secondary) !important;
+  border-bottom: 1px solid var(--border-main) !important;
 }
 
 .ant-table-tbody>tr {
@@ -153,7 +180,7 @@ h6 {
 }
 
 .ant-table-tbody>tr:hover>td {
-  background: rgba(255, 95, 109, 0.02) !important;
+  background: var(--bg-secondary) !important;
   transform: scale(1.005);
   cursor: pointer;
 }
@@ -209,16 +236,16 @@ h6 {
   margin-bottom: 8px;
   padding: 12px 16px !important;
   transition: all 0.3s ease;
-  background: #fafafa;
+  background: var(--bg-secondary);
   border: 1px solid transparent;
 }
 
 .dark .settlement-card .ant-list-item {
-  background: #262626;
+  background: var(--bg-secondary);
 }
 
 .settlement-card .ant-list-item:hover {
-  background: #ffffff;
+  background: var(--bg-card);
   border-color: #ff5f6d;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transform: scale(1.02);
@@ -244,11 +271,11 @@ h6 {
 }
 
 .settlement-plan-alert {
-  background: #fef2f2;
+  background: var(--bg-alert-red);
 }
 
 .dark .settlement-plan-alert {
-  background: #2a1212;
+  background: var(--bg-alert-red);
 }
 
 .dark .ant-list-item-meta-title,
@@ -260,4 +287,64 @@ h6 {
 /* Fix chart text color in dark mode */
 .dark .metric-value {
   color: #e5e5e5;
+}
+
+/* Utility Classes for Themed Boxes */
+.info-box {
+  background: var(--bg-alert-red) !important;
+}
+
+.info-box-title {
+  color: var(--text-alert-red) !important;
+}
+
+.secondary-container {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-main) !important;
+}
+
+.success-box {
+  background: var(--bg-alert-green) !important;
+}
+
+.success-box-text {
+  color: var(--text-alert-green) !important;
+}
+
+/* WhatsApp Preview Theme */
+.whatsapp-preview-bg {
+  background: #e5ddd5 !important;
+  background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png") !important;
+  background-size: contain !important;
+}
+
+.dark .whatsapp-preview-bg {
+  background: #0b141a !important;
+  background-blend-mode: multiply;
+}
+
+.whatsapp-bubble {
+  background: white !important;
+  color: #111b21 !important;
+  box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13) !important;
+}
+
+.dark .whatsapp-bubble {
+  background: #1f2c33 !important;
+  color: #e9edef !important;
+}
+
+.secondary-avatar {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+}
+
+.progress-container {
+  background-color: var(--bg-secondary) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar-container {
+  border: 4px solid var(--bg-card) !important;
+  box-shadow: 0 8px 15px rgba(255, 77, 79, 0.2);
 }

@@ -311,7 +311,7 @@ const Dashboard = () => {
                         <Column {...chartConfig} />
                     </div>
                 ) : (
-                    <div style={{ padding: '60px 0', textAlign: 'center', background: 'rgba(0,0,0,0.02)', borderRadius: 16 }}>
+                    <div className="secondary-container" style={{ padding: '60px 0', textAlign: 'center', borderRadius: 16 }}>
                         <WalletOutlined style={{ fontSize: 40, color: '#bfbfbf', marginBottom: 16 }} />
                         <br />
                         <Text type="secondary">No spending records found for this period.</Text>
@@ -376,11 +376,11 @@ const Dashboard = () => {
                         </div>
 
                         {suggestions.length > 0 && (
-                            <div className="settlement-plan-alert" style={{ marginTop: 24, padding: 16, borderRadius: 12 }}>
-                                <Title level={5} size="small" style={{ marginTop: 0, marginBottom: 12, fontSize: 13 }}>Final Settlement Plan</Title>
+                            <div className="settlement-plan-alert info-box" style={{ marginTop: 24, padding: 16, borderRadius: 12 }}>
+                                <Title level={5} size="small" style={{ marginTop: 0, marginBottom: 12, fontSize: 13, color: 'inherit' }} className="info-box-title">Final Settlement Plan</Title>
                                 {suggestions.map((s, idx) => (
                                     <div key={idx} style={{ marginBottom: 8, fontSize: 13 }}>
-                                        <Badge status="error" /> <Text style={{ color: '#991b1b' }}>{s}</Text>
+                                        <Badge status="error" /> <Text className="info-box-title">{s}</Text>
                                     </div>
                                 ))}
                             </div>
