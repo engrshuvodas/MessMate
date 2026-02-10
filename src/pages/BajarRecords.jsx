@@ -1,4 +1,5 @@
-import React, { useContext, useState, useMemo } from 'react';
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Table, Card, Button, Typography, Space, Tag, Input, Modal, Form, DatePicker, InputNumber, notification, Popconfirm, Divider, Row, Col, Tooltip } from 'antd';
 import {
     ShoppingCartOutlined,
@@ -37,7 +38,7 @@ const BajarRecords = () => {
 
     const filteredData = useMemo(() => {
         return expenses.filter(item => {
-            const matchesSearch = item.details.toLowerCase().includes(searchText.toLowerCase()) ||
+            const matchesSearch = (item.details || "").toLowerCase().includes(searchText.toLowerCase()) ||
                 dayjs(item.date).format('DD MMM YYYY').toLowerCase().includes(searchText.toLowerCase());
 
             const itemDate = dayjs(item.date);
@@ -298,7 +299,7 @@ const BajarRecords = () => {
                             style={{ borderRadius: 6, margin: 0, padding: '2px 10px', background: '#fff1f0', border: '1px solid #ffa39e' }}
                         >
                             <CalendarOutlined style={{ marginRight: 4 }} />
-                            {dateRange[0].format('DD MMM')} - {dateRange[1].format('DD MMM')}
+                            {dateRange[0] && dateRange[1] ? `${dateRange[0].format('DD MMM')} - ${dateRange[1].format('DD MMM')}` : 'Full Records'}
                         </Tag>
                     )}
                 </div>

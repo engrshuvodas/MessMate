@@ -1,3 +1,4 @@
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
 import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { Table, Card, Row, Col, Statistic, DatePicker, Button, Input, Space, Typography, notification, Divider, List, Tag, Badge, Tooltip } from 'antd';
 import { SearchOutlined, DownloadOutlined, TransactionOutlined, ArrowUpOutlined, ArrowDownOutlined, WalletOutlined, FileExcelOutlined } from '@ant-design/icons';
@@ -55,7 +56,7 @@ const Dashboard = () => {
             const isInRange = !dateRange || expenseDate.isBetween(dateRange[0], dateRange[1], 'day', '[]');
 
             const searchLower = searchText.toLowerCase();
-            const matchesSearch = item.details.toLowerCase().includes(searchLower);
+            const matchesSearch = (item.details || "").toLowerCase().includes(searchLower);
 
             return isInRange && matchesSearch;
         });

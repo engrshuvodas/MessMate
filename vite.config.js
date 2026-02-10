@@ -1,3 +1,4 @@
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

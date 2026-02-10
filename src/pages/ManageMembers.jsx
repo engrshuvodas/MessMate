@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
+import React, { useState, useEffect, useContext } from 'react';
 import { Table, Button, Card, Modal, Form, Input, Space, Typography, notification, Popconfirm, Avatar } from 'antd';
-import { UserAddOutlined, EditOutlined, DeleteOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
+import { UserAddOutlined, EditOutlined, DeleteOutlined, UserOutlined, TeamOutlined, WhatsAppOutlined } from '@ant-design/icons';
 import { AppContext } from '../context/AppContext';
 
 const { Title, Text } = Typography;
@@ -19,7 +20,10 @@ const ManageMembers = () => {
 
     const handleEdit = (record) => {
         setEditingMember(record);
-        form.setFieldsValue({ name: record.name });
+        form.setFieldsValue({
+            name: record.name,
+            phone: record.phone || ''
+        });
         setIsModalOpen(true);
     };
 
@@ -39,10 +43,10 @@ const ManageMembers = () => {
         try {
             const values = await form.validateFields();
             if (editingMember) {
-                await updateMember(editingMember.id, values.name);
+                await updateMember(editingMember.id, values.name, values.phone);
                 notification.success({ message: 'Member updated successfully' });
             } else {
-                await addMember(values.name);
+                await addMember(values.name, values.phone);
                 notification.success({ message: 'New member added to the mess' });
             }
             setIsModalOpen(false);
@@ -63,10 +67,17 @@ const ManageMembers = () => {
             title: 'Member Name',
             dataIndex: 'name',
             key: 'name',
-            render: (name) => (
+            render: (name, record) => (
                 <Space>
-                    <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#1890ff' }} />
-                    <Text strong>{name}</Text>
+                    <Avatar
+                        src={name.toLowerCase().includes('shuvo') ? "/engr_shuvo.jpg" : undefined}
+                        icon={!name.toLowerCase().includes('shuvo') ? <UserOutlined /> : undefined}
+                        style={{ backgroundColor: name.toLowerCase().includes('shuvo') ? 'transparent' : '#1890ff' }}
+                    />
+                    <div>
+                        <Text strong style={{ display: 'block' }}>{name}</Text>
+                        <Text type="secondary" style={{ fontSize: 11 }}>{record.phone || 'No WhatsApp'}</Text>
+                    </div>
                 </Space>
             )
         },
@@ -150,6 +161,16 @@ const ManageMembers = () => {
                         ]}
                     >
                         <Input placeholder="e.g. Shuvo Das" prefix={<UserOutlined />} />
+                    </Form.Item>
+                    <Form.Item
+                        name="phone"
+                        label="WhatsApp Number"
+                        rules={[
+                            { required: true, message: 'Phone number is required for notifications' },
+                            { pattern: /^[0-9+]+$/, message: 'Invalid phone format' }
+                        ]}
+                    >
+                        <Input placeholder="e.g. +88017..." prefix={<WhatsAppOutlined />} />
                     </Form.Item>
                 </Form>
             </Modal>

@@ -4,7 +4,7 @@ color 0c
 
 echo.
 echo  ==============================================================
-echo            PAISEGONE - MESS EXPENSE TRACKER
+echo            PAISEGONE - MESS EXPENSE TRACKER v2.2
 echo  ==============================================================
 echo.
 

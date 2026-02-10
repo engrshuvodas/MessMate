@@ -1,5 +1,6 @@
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
 import React, { useContext, useState } from 'react';
-import { Layout, Menu, Button, theme, Space, Typography, Popconfirm, Avatar, Dropdown } from 'antd';
+import { Layout, Menu, Button, theme, Space, Typography, Popconfirm, Avatar, Dropdown, Badge } from 'antd';
 import {
     DashboardOutlined,
     PlusCircleOutlined,
@@ -11,7 +12,9 @@ import {
     UserOutlined,
     BellOutlined,
     SettingOutlined,
-    UnorderedListOutlined
+    UnorderedListOutlined,
+    InfoCircleOutlined,
+    WhatsAppOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -56,9 +59,19 @@ const AppLayout = () => {
             label: 'Mess Members',
         },
         {
+            key: '/settlements',
+            icon: <WhatsAppOutlined style={{ fontSize: 18 }} />,
+            label: 'Settlement Summary',
+        },
+        {
             key: '/settings',
             icon: <SettingOutlined style={{ fontSize: 18 }} />,
             label: 'Settings',
+        },
+        {
+            key: '/about',
+            icon: <InfoCircleOutlined style={{ fontSize: 18 }} />,
+            label: 'About Software',
         },
     ];
 
@@ -147,7 +160,7 @@ const AppLayout = () => {
 
                         <Dropdown menu={{ items: profileItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
                             <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <Avatar size="medium" icon={<UserOutlined />} style={{ background: 'var(--primary-gradient)', boxShadow: '0 4px 10px rgba(255, 95, 109, 0.2)' }} />
+                                <Avatar size="medium" src="/engr_shuvo.jpg" style={{ boxShadow: '0 4px 10px rgba(255, 95, 109, 0.2)', border: '1px solid rgba(255, 95, 109, 0.2)' }} />
                                 <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
                                     <Text strong style={{ fontSize: 13 }}>Shuvo Das</Text>
                                     <Text type="secondary" style={{ fontSize: 11 }}>Mess Manager</Text>
@@ -169,7 +182,8 @@ const AppLayout = () => {
                 </Content>
 
                 <Footer style={{ textAlign: 'center', background: 'transparent', color: '#bfbfbf', padding: '24px 50px' }}>
-                    PaiseGone Expense Tracker ©{new Date().getFullYear()} • By <a href="https://github.com/engrshuvodas/" target="_blank" rel="noopener noreferrer" style={{ color: '#ff5f6d', fontWeight: 600 }}>Engr Shuvo</a>
+                    PaiseGone Expense Tracker • <b>Version 2.1</b> • ©{new Date().getFullYear()} <br />
+                    Developed with ❤️ By <a href="https://github.com/engrshuvodas/" target="_blank" rel="noopener noreferrer" style={{ color: '#ff5f6d', fontWeight: 600 }}>Engr Shuvo Das</a> • <a href="/about" style={{ color: '#bfbfbf' }}>About</a>
                 </Footer>
             </Layout>
         </Layout>

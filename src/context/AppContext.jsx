@@ -1,3 +1,4 @@
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
 import React, { createContext, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
@@ -160,14 +161,14 @@ export const AppProvider = ({ children }) => {
         return Promise.resolve();
     };
 
-    const addMember = (name) => {
-        const newMember = { id: Date.now().toString(), name };
+    const addMember = (name, phone = '') => {
+        const newMember = { id: Date.now().toString(), name, phone };
         setMembers([...members, newMember]);
         return Promise.resolve(newMember);
     };
 
-    const updateMember = (id, name) => {
-        setMembers(members.map(m => m.id === id ? { ...m, name } : m));
+    const updateMember = (id, name, phone) => {
+        setMembers(members.map(m => m.id === id ? { ...m, name, phone } : m));
         return Promise.resolve();
     };
 

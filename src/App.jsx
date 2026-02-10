@@ -1,3 +1,4 @@
+/** Software Version: 2.2 | Dev: Engr Shuvo Das **/
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
@@ -7,6 +8,8 @@ import ManageMembers from './pages/ManageMembers';
 import BajarRecords from './pages/BajarRecords';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import About from './pages/About';
+import Settlements from './pages/Settlements';
 import { AppProvider, AppContext } from './context/AppContext';
 import { ConfigProvider, theme as antdTheme } from 'antd';
 
@@ -56,6 +59,8 @@ const AppContent = () => {
                         <Route path="/bajar-records" element={<BajarRecords />} />
                         <Route path="/members" element={<ManageMembers />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/settlements" element={<Settlements />} />
                     </Route>
                 </Route>
 
